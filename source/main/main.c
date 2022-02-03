@@ -3,18 +3,13 @@
  #include "freertos/task.h"
 
 // Components
-#include "brewr_hal.h"
-//#include "temp_regulator.h"
+#include "app_main.h"
 
 void app_main()
 {
-    hal_sys_init();
+    APP_MAIN_init();
+    TEMP_SENSE_init();
 
-    tmp_reg_state_machine();
-    
-    for (;;)
-    {
-    	printf(".\n");
-        vTaskDelay(1000 / portTICK_RATE_MS);
-    }	
+    xTaskCreate(APP_MAIN_start, "main_app", 2048, NULL, 10, &APP_MAIN_th);
+    //portTICK_RATE_MS);	
 }
