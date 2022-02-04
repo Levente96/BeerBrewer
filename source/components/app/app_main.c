@@ -2,6 +2,11 @@
 
 void APP_MAIN_init(void)
 {
+    APP_MAIN_cIntIndex      = 0u;
+    APP_MAIN_paused         = 1u;
+    APP_MAIN_time           = 0u;
+    APP_MAIN_heating        = 0u;
+
     gpio_config_t io_conf;
     io_conf.intr_type = GPIO_INTR_DISABLE;
     io_conf.mode = GPIO_MODE_OUTPUT;

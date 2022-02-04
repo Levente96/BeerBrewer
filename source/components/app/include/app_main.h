@@ -9,8 +9,8 @@
  * 
  */
 
-#ifndef _APP_MAIN_
-#define _APP_MAIN_
+#ifndef _APP_MAIN_H_
+#define _APP_MAIN_H_
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -43,12 +43,12 @@ typedef struct interval
     uint8_t  temp;          ///< Temperature
 }interval;
 
-interval        APP_MAIN_intervals[10];         ///< Intervals of brewing
-uint8_t         APP_MAIN_cIntIndex      = 0u;   ///< Index of current interval
-uint8_t         APP_MAIN_paused         = 1u;   ///< Should the app be running
-TickType_t      APP_MAIN_time           = 0u;   ///< Timer for periodic time call
-TaskHandle_t    APP_MAIN_th;                    ///< Main APP Task handler
-uint8_t         APP_MAIN_heating        = 0u;   ///< Flag if the heater is running
+interval        APP_MAIN_intervals[10]; ///< Intervals of brewing
+uint8_t         APP_MAIN_cIntIndex ;    ///< Index of current interval
+uint8_t         APP_MAIN_paused;        ///< Should the app be running
+TickType_t      APP_MAIN_time;          ///< Timer for periodic time call
+TaskHandle_t    APP_MAIN_th;            ///< Main APP Task handler
+uint8_t         APP_MAIN_heating;       ///< Flag if the heater is running
 
 /**
  * \brief Main app init

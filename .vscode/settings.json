@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "brewr_hal.h": "c"
+        "brewr_hal.h": "c",
+        "gpio.h": "c"
     }
 }

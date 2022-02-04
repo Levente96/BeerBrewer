@@ -9,14 +9,14 @@
  * 
  */
 
-#ifndef _TEMP_SENSE_
-#define _TEMP_SENSE_
+#ifndef _TEMP_SENSE_H_
+#define _TEMP_SENSE_H_
 
 #include <stdint.h>
 #include "driver/adc.h"
 #include "esp_err.h"
 
-uint16_t TEMP_SENSE_SHIFT = 0;  ///<    Correction for the temperature
+extern uint16_t TEMP_SENSE_SHIF;  ///<    Correction for the temperature
 
 /**
  * \brief Init temperature sensing
