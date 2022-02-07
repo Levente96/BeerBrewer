@@ -1,6 +1,12 @@
 {
     "files.associations": {
         "brewr_hal.h": "c",
-        "gpio.h": "c"
+        "gpio.h": "c",
+        "esp_ota_ops.h": "c",
+        "atomic": "c",
+        "streambuf": "c",
+        "type_traits": "c",
+        "*.inc": "c",
+        "esp_http_server.h": "c"
     }
 }

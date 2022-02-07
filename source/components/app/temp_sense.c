@@ -19,5 +19,6 @@ uint8_t TEMP_SENSE_get_temp(uint16_t* temp)
         *temp = (t + TEMP_SENSE_SHIFT);
         ret_val = 0;
     }
+    //ESP_LOGI("TEMP_SENSE", "Temp: %d", *temp);
     return ret_val;
 }

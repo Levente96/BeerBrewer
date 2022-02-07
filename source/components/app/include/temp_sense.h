@@ -15,6 +15,7 @@
 #include <stdint.h>
 #include "driver/adc.h"
 #include "esp_err.h"
+#include "esp_log.h"
 
 extern uint16_t TEMP_SENSE_SHIF;  ///<    Correction for the temperature
 

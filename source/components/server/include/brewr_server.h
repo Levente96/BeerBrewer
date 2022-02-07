@@ -32,6 +32,8 @@
 
 #include <esp_http_server.h>
 
+#include "app_main.h"
+
 #define GOT_IPV4_BIT BIT(0)
 #define CONNECTED_BITS (GOT_IPV4_BIT)
 
@@ -60,10 +62,11 @@ extern httpd_handle_t start_webserver(void);
 void stop_webserver(httpd_handle_t server);
 
 // URI Handlers
-
 esp_err_t version_get_handler(httpd_req_t *req);
+esp_err_t setup_get_handler(httpd_req_t *req);
 
-extern httpd_uri_t version;
+extern httpd_uri_t version_uri;
+extern httpd_uri_t setup_uri;
 
 
 #endif

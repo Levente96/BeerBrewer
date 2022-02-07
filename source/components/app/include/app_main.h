@@ -16,6 +16,7 @@
 #include "freertos/task.h"
 #include "driver/gpio.h"
 #include <stdint.h>
+#include "esp_log.h"
 
 // Components
 #include "temp_sense.h"

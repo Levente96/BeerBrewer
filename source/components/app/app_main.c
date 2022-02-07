@@ -23,6 +23,8 @@ void APP_MAIN_start(void)
         uint16_t temp = 0xFFFF;
         if(TEMP_SENSE_get_temp(&temp) == 0u && APP_MAIN_paused == 0u)
         {
+            ESP_LOGI("MAIN", "[%d/%ds]: %d°C/ %d°C",APP_MAIN_intervals[APP_MAIN_cIntIndex].duration, APP_MAIN_intervals[APP_MAIN_cIntIndex].length,
+                                                    temp, APP_MAIN_intervals[APP_MAIN_cIntIndex].temp);
             if(temp < APP_MAIN_intervals[APP_MAIN_cIntIndex].temp - TEMP_RANGE)
             {
                 APP_MAIN_heating = 1u;
@@ -42,6 +44,7 @@ void APP_MAIN_start(void)
                 // If temp is reached we are no longer preheating
                 if(temp >= APP_MAIN_intervals[APP_MAIN_cIntIndex].temp) 
                 {
+                    ESP_LOGI("MAIN", "Preheat ended!");
                     APP_MAIN_intervals[APP_MAIN_cIntIndex].duration = APP_MAIN_intervals[APP_MAIN_cIntIndex].length;
                 }
             }
@@ -53,7 +56,7 @@ void APP_MAIN_start(void)
             {
                 // Go to the next interval
                 APP_MAIN_cIntIndex++;
-                if(APP_MAIN_cIntIndex >= 9)
+                if(APP_MAIN_cIntIndex >= 9 || APP_MAIN_intervals[APP_MAIN_cIntIndex].length == 0)
                 {   
                     // Brewing finished!
                     APP_MAIN_paused = 1u;
@@ -65,9 +68,16 @@ void APP_MAIN_start(void)
         {
             if(APP_MAIN_paused == 0u)
             {
-                // LOG ERROR
+                ESP_LOGE("MAIN", "Temp could not be read!");
                 gpio_set_level(GPIO_OUTPUT_HEATER_LED, 1);
                 gpio_set_level(GPIO_OUTPUT_COOLER_LED, 1);
+                gpio_set_level(GPIO_OUTPUT_HEATER_PIN, 0);
+            }
+            else if(APP_MAIN_cIntIndex >= 9 || APP_MAIN_intervals[APP_MAIN_cIntIndex].length == 0)
+            {
+                ESP_LOGI("MAIN", "Finished/Stopped!");
+                gpio_set_level(GPIO_OUTPUT_HEATER_LED, 0);
+                gpio_set_level(GPIO_OUTPUT_COOLER_LED, 0);
                 gpio_set_level(GPIO_OUTPUT_HEATER_PIN, 0);
             }
         }
