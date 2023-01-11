@@ -21,16 +21,19 @@ void APP_MAIN_start(void)
     for(;;)
     {
         uint16_t temp = 0xFFFF;
+        // Read temperature if app is not paused
         if(TEMP_SENSE_get_temp(&temp) == 0u && APP_MAIN_paused == 0u)
         {
             ESP_LOGI("MAIN", "[%d/%ds]: %d°C/ %d°C",APP_MAIN_intervals[APP_MAIN_cIntIndex].duration, APP_MAIN_intervals[APP_MAIN_cIntIndex].length,
                                                     temp, APP_MAIN_intervals[APP_MAIN_cIntIndex].temp);
+            // Turn ON heater if temp is lower than expected
             if(temp < APP_MAIN_intervals[APP_MAIN_cIntIndex].temp - TEMP_RANGE)
             {
                 APP_MAIN_heating = 1u;
                 gpio_set_level(GPIO_OUTPUT_HEATER_LED, 1);
                 gpio_set_level(GPIO_OUTPUT_HEATER_PIN, 1);
             }
+            // Turn OFF heater if upper limit is reached
             if(temp > APP_MAIN_intervals[APP_MAIN_cIntIndex].temp + TEMP_RANGE)
             {
                 APP_MAIN_heating = 0u;
@@ -56,7 +59,7 @@ void APP_MAIN_start(void)
             {
                 // Go to the next interval
                 APP_MAIN_cIntIndex++;
-                if(APP_MAIN_cIntIndex >= 9 || APP_MAIN_intervals[APP_MAIN_cIntIndex].length == 0)
+                if(APP_MAIN_cIntIndex >= (NUMBER_OF_INTERVALS - 1) || APP_MAIN_intervals[APP_MAIN_cIntIndex].length == 0)
                 {   
                     // Brewing finished!
                     APP_MAIN_paused = 1u;
@@ -64,11 +67,13 @@ void APP_MAIN_start(void)
             }
 
         }
+        // If paused or temp could not be read
         else
         {
             if(APP_MAIN_paused == 0u)
             {
                 ESP_LOGE("MAIN", "Temp could not be read!");
+                // Thermal runaway!
                 gpio_set_level(GPIO_OUTPUT_HEATER_LED, 1);
                 gpio_set_level(GPIO_OUTPUT_COOLER_LED, 1);
                 gpio_set_level(GPIO_OUTPUT_HEATER_PIN, 0);

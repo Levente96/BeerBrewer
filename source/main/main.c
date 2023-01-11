@@ -16,8 +16,9 @@ void app_main()
     BREWR_SERVER_init();
 
 
-    xTaskCreate(&APP_MAIN_start, "main_app", 2048, NULL, 10, &APP_MAIN_th);
-    xTaskCreate(&ota_task, "ota_thread", 8192, NULL, 5, NULL);
+    xTaskCreate(&APP_MAIN_start,   "main_app", 2048, NULL, 10, &APP_MAIN_th);
+    xTaskCreate(      &ota_task, "ota_thread", 8192, NULL,  5,         NULL);
+    
 
     //portTICK_RATE_MS);	
 }
