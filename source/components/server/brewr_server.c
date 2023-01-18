@@ -1,8 +1,8 @@
 #include "brewr_server.h"
 
 const char           *TAG                    = "WIFI";
-char                 *s_connection_name      = "Csoka-2.4G";
-char                 *s_connection_passwd    = "Gagyibogyo1";
+char                 *s_connection_name      = "OnePlus 7 Pro";
+char                 *s_connection_passwd    = "almafa37";
 httpd_handle_t       server                  = NULL;
 
 httpd_uri_t version_uri = {
@@ -35,8 +35,8 @@ void BREWR_SERVER_init(void)
     ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
     wifi_config_t wifi_config = { 0 };
 
-    strncpy((char *)&wifi_config.sta.ssid, s_connection_name, 10);
-    strncpy((char *)&wifi_config.sta.password, s_connection_passwd, 11);
+    strncpy((char *)&wifi_config.sta.ssid, s_connection_name, 14);
+    strncpy((char *)&wifi_config.sta.password, s_connection_passwd, 9);
 
     ESP_LOGI(TAG, "Connecting to %s...", wifi_config.sta.ssid);
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
